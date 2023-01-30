@@ -21,22 +21,22 @@ Voici ce que vous allez apprendre ici :
 
 ## 2- Outils
 
-- `cat/head/tail` : afficher (la totalité/le début/la fin) d'un fichier à l'écran
-- `less` : afficher un fichier avec défilement
-- `grep` : chercher un motif (expression régulière)
-- `sort` : trier les lignes
-- `uniq -c` : éliminer ou compter les doublons
-- `tr` : transposer ou éliminer des caractères
-- `wc` : compter les lignes, mots et caractères
-- `sed` : éditer (remplacer, éliminer) une chaîne avec des expressions régulières
-- `awk` : langage d'examen et de traitement de motifs
-- `cut` : extraire des colonnes
-- `paste` : "coller" des lignes des differents fichiers
-- `join` : équivalent au JOIN de SQL
-- `xxd` : binaire vers hex ou l'envers
-- `rev`: inverser l'ordre des lignes
-- `wget`: telecharger une fichier d'internet vers l'ordinateur local
-- Conversion d'encodages de caractères : `iconv`
+- `cat/head/tail`: Afficher (la totalité/le début/la fin) d'un fichier à l'écran
+- `less` : Afficher un fichier avec défilement
+- `grep` : Chercher un motif (expression régulière)
+- `sort` : Trier les lignes
+- `uniq -c` : Éliminer ou compter les doublons
+- `tr` : Transposer ou éliminer des caractères
+- `wc` : Compter les lignes, mots et caractères
+- `sed` : Éditer (remplacer, éliminer) une chaîne avec des expressions régulières
+- `awk` : Langage d'examen et de traitement de motifs
+- `cut` : Extraire des colonnes
+- `paste` : Coller des lignes des differents fichiers
+- `join` : Équivalent au JOIN de SQL
+- `xxd` : Binaire vers hex ou l'envers
+- `rev`: Inverser l'ordre des lignes
+- `wget`: Telecharger une fichier d'internet vers l'ordinateur local
+- `iconv`: Conversion d'encodages de caractères
 
 **Suggestions** :
 
