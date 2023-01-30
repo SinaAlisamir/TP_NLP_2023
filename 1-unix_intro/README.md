@@ -1,5 +1,5 @@
-# Unix intro
-Le lecteur est ici présenté aux bases d'Unix et aux commandes de terminal qu'il est utile de connaître. Ces travaux pratiques utilisent beaucoup de matériel provenant [des travaux pratiques de l'année précédente (2022) sur ce sujet](https://github.com/lorelupo/tp_nlp/tree/main/tp_intro). Le plan de ce travail pratique est le suivant:
+# Introduction au traitement de texte par l'utilisation de commandes unix
+Le lecteur est ici présenté aux bases d'Unix et aux commandes de terminal qu'il est utile de connaître pour manipuler de texte. Ces travaux pratiques utilisent beaucoup de matériel provenant [des travaux pratiques de l'année précédente (2022) sur ce sujet](https://github.com/lorelupo/tp_nlp/tree/main/tp_intro). Le plan de ce travail pratique est le suivant:
 
 1. Aperçu: Ce que vous allez apprendre ici
 2. Outils: La boîte à outils dont vous aurez besoin ici (et très probablement après ce cours)
@@ -11,15 +11,13 @@ Le lecteur est ici présenté aux bases d'Unix et aux commandes de terminal qu'i
 
 Voici ce que vous allez apprendre ici :
 
+- Des encodages des characters de text et les manipuler
 - Compter les mots dans un texte
-- Ordonner une liste de mots par ordre "ASCII" et ordre alphabétique
+- Ordonner une liste de mots par ordre alphabétique ou ordre numérique
 - Calculer des statistiques d’occurrences et de co-occurrences
 - Extraire une information utile d'un dictionnaire
 - Extraire une information utile d'un texte
 - Transformer un texte
-- Calculer des mesures d'association entre les mots
-- Comprendre le fonctionnement de UNICODE
-- Reconnaître et manipuler les encodages des fichier de texte
 
 ## 2- Outils
 
@@ -33,9 +31,11 @@ Voici ce que vous allez apprendre ici :
 - `sed` : éditer (remplacer, éliminer) une chaîne avec des expressions régulières
 - `awk` : langage d'examen et de traitement de motifs
 - `cut` : extraire des colonnes
-- `paste` : "coller" des colonnes
+- `paste` : "coller" des lignes des differents fichiers
 - `join` : équivalent au JOIN de SQL
-- `xxd`
+- `xxd` : binaire vers hex ou l'envers
+- `rev`: inverser l'ordre des lignes
+- `wget`: telecharger une fichier d'internet vers l'ordinateur local
 - Conversion d'encodages de caractères : `iconv`
 
 **Suggestions** :
@@ -55,75 +55,164 @@ Par défaut, la plupart des outils lit les entrées (stdin) à partir du clavier
 4- Exercices
 ---------
 
-**Données utilisé pour les exercices** : [RADIOS.txt](https://raw.githubusercontent.com/lorelupo/tp_nlp/main/tp_intro/RADIOS.txt). Ce fichier contient des transcriptions d'enregistrements radiophoniques comme France inter et RFI. You can get the text with the following command:
+**Données utilisé pour les exercices** : [RADIOS.txt](https://raw.githubusercontent.com/lorelupo/tp_nlp/main/tp_intro/RADIOS.txt). Ce fichier contient des transcriptions d'enregistrements radiophoniques comme France inter et RFI. Vous pouvez obtenir le texte avec la commande suivante :
 
 ```bash
 wget https://raw.githubusercontent.com/lorelupo/tp_nlp/main/tp_intro/RADIOS.txt
 ```
 
----------
-- **Exercice 0** : Trouver une commande qui transforme tout le texte en lettres majuscules
-  
-  - Entrée : Fichier texte RADIOS.txt
-  - Sortie: Tout le texte en lettres majuscules
-  - Aide: pensez à bien gérer les accents
-  
 
 ---------
-- **Exercice 1** : Trouver la suite d'instructions qui permet de compter les mots dans un texte
-  - Entrée : Fichier texte RADIOS.txt
-  - Sortie: Liste de mots avec leur nombre d'apparitions dans le texte (RADIOS.hist)
-- 
+- **Exercice 0** : Des encodages des characters de text
 
-### Exercice 1
-**--- Trouver la suite d'instructions qui permet de compter les mots dans un texte**
+- L'encodage des caractères est le processus qui consiste à attribuer des numéros aux caractères graphiques, en particulier les caractères écrits du langage humain, afin de permettre leur stockage, leur transmission et leur transformation à l'aide d'ordinateurs numériques [Voir ici pour plus d'info](https://en.wikipedia.org/wiki/Character_encoding). Voici quelque exemple des plus connus encodages: [US-ASCII](https://en.wikipedia.org/wiki/US-ASCII), [UTF-8](https://en.wikipedia.org/wiki/UTF-8), [UTF-16](https://en.wikipedia.org/wiki/UTF-16), [UTF-32](https://en.wikipedia.org/wiki/UTF-32)
 
-- Entrée : fichier texte RADIOS.txt
-- Sortie : liste de mots avec leur nombre d'apparitions dans le texte (RADIOS.hist)
+- Des caractères différents pour des langues différentes doivent être supportés par l'encodage, afin d'être écrits ou lus. Par exemple, l'ASCII a été conçu pour prendre en charge la langue anglaise, et ne possède donc pas les caractères accentués, nécessaires pour coder tous les caractères utilisés dans d'autres langues latins, comme le français.
 
-**Aide** : utiliser `tr`, `sort` et `uniq`, `penser` à "piper" (`|`) les instructions
+- La commande `iconv` peut être utilisée pour convertir un texte en différents encodages. Vous pouvez utiliser la page `man` de `iconv` pour plus d'informations.
 
-- **Q1** : Quel est le mot qui apparaît exactement 1732 fois dans ce texte ?
-- **Q2** : Combien de fois le mot "orange" apparaît dans ce texte ?
+- **Q0**: Remplacer tous les caractères français accentués dans le fichier `RADIOS.txt` en utilisant la commande `iconv`. Et puis, enregistrez le nouveux text sans accents, comme `[name]_TP1_E0_Q0.txt`
 
-### Exercice 2
-**--- Trier les mots (`sort`)**
+  - **Aide**: Vous pouvez utiliser `//TRANSLIT` avec la commande `iconv` pour convertir, par exemple `ascii//TRANSLIT` signifie: utiliser `ascii` mais si c'est pas possibles pour certains caractères, remplacer-les.
 
-Exemples (voir la page `man` de `sort`):
+- **Réponse**:
 
-| Commande       | Description                                      |
-| -------------- | ------------------------------------------------ |
-| `sort -d`      | ordre dictionnairique                            |
-| `sort -f`      | ignorer majuscules/minuscules                    |
-| `sort -n`      | ordre numérique                                  |
-| `sort -nr`     | ordre numérique inversé                          |
-| `sort -k 1`    | commencer au champ 1 (le premier est le champ 1) |
-| `sort -k 0.50` | commencer au 50e caractère                       |
-| `sort -k 1.5`  | commencer au 5e caractère du champ 1             |
+  ```bash
+  
+  ```
 
- - **Q1** : Trier les mots de RADIOS.hist (sortie Ex.1) par fréquence d'apparition
-- **Q2** : Trier les mots de RADIOS.hist par ordre alphabétique
-- **Q3** : Trier les mots de RADIOS.hist par ordre "rhymique" (exemple, mettre ensemble tous les mots qui finissent par "-ment".
+---------
+- **Exercice 1** : Trouver une commande qui transforme tout le texte en lettres majuscules
 
-**Aide** : utiliser la commande unix `rev`
+  - **Q0**: Rendre tout le texte en lettres majuscules et enregistrez les 200 premiere lignes dans `[name]_TP1_E1_Q0.txt`
+    - **Entrée** : Fichier texte RADIOS.txt
+    - **Aide**: Pensez à bien gérer les accents
+  - **Réponse**:
 
-### Exercice 3
-**--- Trouver et compter les n-grammes du texte RADIOS.txt**
+  ```bash
+  
+  ```
 
-Pour chaque n-gramme, avec n=2,3,4, générer un fichier de statistiques où chaque ligne est de la forme "mot1 mot2 nb" pour les bi-grammes, "mot1 mot2 mot3 nb" pour les tri-grammes, etc.s
+---------
 
-- **Q1** : Combien de fois le 2-gramme "il est" apparaît dans ce texte ?
-- **Q2** : Combien de 3-grammes distincts sont trouvés dans ce texte ?
-- **Q3** : Quel est le 4-gramme le plus fréquent ?
+- **Exercice 2** : Trouver la suite d'instructions qui permet de compter les mots dans un texte
 
-**Aide** : utiliser les commandes tail et paste
+  - **Pour commencer**: Liste des mots avec leur nombre d'apparitions dans le texte (enregestrez la sortie comme `RADIOS.hist`)
 
-### Exercice 4
+  - **Aide** : utiliser `tr`, `sort` et `uniq`, `penser` à "piper" (`|`) les instruction
 
-**--- Filtrer les lignes (`grep`)**
+  - **Q0** : Quel est le mot qui apparaît exactement 1732 fois dans ce texte ? (Enregistrez le chifre et le mot separer par espace dans `[name]_TP1_E2_Q0.txt`)
 
-Exemples (Voir la page `man` de `grep`):
+  - **Réponse**:
 
+    ```bash
+    
+    ```
+    
+  - **Q1** : Combien de fois le mot "orange" apparaît dans ce texte ? 
+  
+  - Enregistrez le chifre et le mot separer par espace, comme `[name]_TP1_E2_Q1.txt`
+  
+- **Réponse**:
+  
+  ```bash
+    
+    ```
+  
+- **Aide**: Pour les question suivants pensez bien à regarder la page man de `sort`
+  
+- **Q2** : Trier les mots de RADIOS.hist par fréquence d'apparition et en igniorant les majuscules/minuscules ? 
+  
+  - Enregistrez les chifres et les mots separer par espace, comme `[name]_TP1_E2_Q2.txt`
+  
+- **Réponse**:
+  
+  ```bash
+    
+    ```
+    
+  - **Q3** : Trier les mots de RADIOS.hist par ordre alphabétique ? 
+  
+  - Enregistrez les chifres et les mots separer par espace, comme `[name]_TP1_E2_Q3.txt`
+  
+- **Réponse**:
+  
+  ```bash
+    
+    ```
+  
+- **Q4** : Trier les mots de RADIOS.hist par ordre des mots qui rime ensemble ?
+  
+  - **Exemple**: mettre ensemble tous les mots qui finissent par "-ment". 
+    - **Aide**: Utilisez la commande unix `rev` 
+    - Enregistrez les chifres et les mots separer par espace comme `[name]_TP1_E2_Q4.txt`)
+  
+- **Réponse**:
+  
+  ```bash
+    
+    ```
+
+---------
+
+- **Exercice 3** : Trouver et compter les n-grammes du texte RADIOS.txt
+
+  - Pour chaque n-gramme, avec n=2,3,4, générer un fichier de statistiques où chaque ligne est de la forme "mot1 mot2 nb" pour les bi-grammes, "mot1 mot2 mot3 nb" pour les tri-grammes, etc.
+  
+- Pour savoir plus de n-gram dans NLP: [Understanding Word N-grams in NLP](https://towardsdatascience.com/understanding-word-n-grams-and-n-gram-probability-in-natural-language-processing-9d9eef0fa058)
+  
+- **Attention**: Par mot ici, nous entendons chaque ensemble de caractères séparés par un espace.
+  
+- **Q0** : Enregistrez tous les lignes avec le 2-gramme "il est" dans le texte ?
+  
+    - Enregistrez le stdout comme `[name]_TP1_E3_Q0.txt`
+    
+  - **Réponse**:
+  
+  ```bash
+  
+  ```
+  
+  - **Q1** : Enregistrez combien de fois le 2-gramme "il est" apparaît dans ce texte ?
+  
+  - Enregistrez le stdout comme `[name]_TP1_E3_Q1.txt`
+  
+- **Réponse**:
+  
+  ```bash
+  
+  ```
+  
+  - **Aide**: Pensez à utiliser les commandes tail et paste pour les questions suivants. Par example, `tail +3` peut être utilisé pour imprimer toutes les lignes sauf les deux premières.
+  
+  - **Q2** : Combien de 3-grammes distincts sont trouvés dans ce texte ?
+  
+    - Enregistrez le stdout comme `[name]_TP1_E3_Q2.txt`
+  
+  - **Réponse**:
+  
+    ```bash
+    
+    ```
+    
+  - **Q3** : Quel est le 3-gramme le plus fréquent ?
+  
+    - Afficher la frequance et apres le 3-gramme, example: "45 dans le monde".
+    - Enregistrez le stdout comme `[name]_TP1_E3_Q3.txt`
+  
+  - **Réponse**:
+  
+    ```bash
+    
+    ```
+  
+
+---------
+
+- **Exercice 4** : Filtrer les lignes avec `grep`
+- Pensez à regarder la page `man` de `grep` pour cet exercise. 
+- Les examples utiles:
+  
 | Commande                                            | Description                                  |
 | --------------------------------------------------- | -------------------------------------------- |
 | `grep '[A-Z]'`                                      | filtre lignes contenant une majuscule        |
@@ -138,155 +227,110 @@ Exemples (Voir la page `man` de `grep`):
 | `grep '[aeiouAEIOU].*[aeiouAEIOU]'`                 | filtre lignes avec au moins deux voyelles    |
 | `grep '^[^aeiouAEIOU]*[aeiouAEIOU][^aeiouAEIOU]*$'` | filtre lignes avec exactement une voyelle    |
 
-Avec expressions régulières:
+  - Les expressions régulières:
 
-| Expression      | Match                     |
-| --------------- | ------------------------- |
-| `a`             | la lettre "a"             |
-| `[a-z]`         | une lettre minuscule      |
-| `[A-Z]`         | une lettre majuscule      |
-| `[0-9]`         | un chiffre                |
-| `[0123456789]`  | un chiffre                |
-| `[aeiouAEIOU]`  | une voyelle               |
-| `[^aeiouAEIOU]` | tout sauf une voyelle     |
-| `.`             | un caractère              |
-| `^`             | début de ligne            |
-| `$`             | fin de ligne              |
-| `x*`            | "x" répété 0 fois ou plus |
-| ``x+``          | "x" répété 1 fois ou plus |
-| `x\|y`          | "x" ou "y"                |
+| Expression      | Match                                    |
+| --------------- | ---------------------------------------- |
+| `a`             | la lettre "a"                            |
+| `[a-z]`         | une lettre minuscule                     |
+| `[A-Z]`         | une lettre majuscule                     |
+| `[0-9]`         | un chiffre                               |
+| `[0123456789]`  | un chiffre                               |
+| `[aeiouAEIOU]`  | une voyelle (basé sur anglais)           |
+| `[^aeiouAEIOU]` | tout sauf une voyelle (basé sur anglais) |
+| `.`             | un caractère                             |
+| `^`             | début de ligne                           |
+| `$`             | fin de ligne                             |
+| `x*`            | "x" répété 0 fois ou plus                |
+| ``x+``          | "x" répété 1 fois ou plus                |
+| `x\|y`          | "x" ou "y"                               |
 
-**Note** : outils différents (`grep`, `sed`, etc.) ont différents caractères d'échappement (e.g. `;'"#$&*?[]<>{}\`). Pour utiliser ces caractères dans des regex, il faut placer `\` avant. E.g. `\{` pour utiliser `{`.
+  **Attention** : Les outils différents (`grep`, `sed`, etc.) ont différents caractères d'échappement (e.g. `;'"#$&*?[]<>{}\`). Pour utiliser ces caractères dans des regex, il faut placer `\` avant. E.g. `\{` pour utiliser `{`.
 
-- **Q1** : Combien y a-t-il de mots uniques de 9 lettres dans RADIOS.txt ?
-- **Q2** :  Combien y a-t-il des mots uniques sans voyelle dans RADIOS.txt ?
-
-### Exercice 5 [Optionnel]
-**--- Langage `awk`**
-
-`awk` est un langage dont la syntaxe est similaire à C, et qui permet de faire des opérations sur des champs dans un fichier où chaque ligne est du type "champ1 champ2 champ3 champ4 ..."
-
-Exemple:
-
-- `awk '{print $1}'` sélectionne le premier champ dans un fichier, équivalent à `cut -f 1`
-- `awk '$1 > 100 {print $0}' RADIOS.hist` affiche les mots dont le nombre d’occurrences est supérieur à 100 dans `RADIOS.txt`
-
-Il est possible d'écrire le programme dans un fichier et après l'appeler, par exemple, en tapant `SelectPremierChamp.awk <fichier`
-
-Les prédicats disponibles sont : &gt;, &lt;, &gt;=, &lt;=, ==, !=, &amp;&amp;, ||
-
-- **Q1** : Trouver les bi-grammes qui apparaissent exactement 13 fois.
-- **Q2** : Trouver les palindromes dans RADIOS.txt (mots qui s'écrivent de la même façon de droite à gauche ou de gauche à droite).
-
-### Exercice 6
-
-**--- Remplacements de séquences avec `sed`**
-(Voir la page `man` de `sed`)
-
-L'outil `sed` permet de remplacer du texte à l'aide d'expressions régulières. Ainsi, la commande `sed 's/exp1/exp2/[options]'` va remplacer (s) l'expression  `exp1` par l'expression `exp2`. L'option est souvent la lettre `g` pour dire que toutes les occurrences sur une même ligne doivent être remplacées. Par exemple :
-
-- `sed 's/[éèêë]/e/g'` remplace toutes les lettres "e" accentuées par une lettre non-accentuée
-- `sed 's/\([^ ]*\)ation /\U\1ATION /g'` transforme les mots qui finissent par le suffixe "ation" en majuscules, par exemple, "habitation" devient "HABITATION"
-
-**Suggestion**: on peut éviter d'échapper les caractères comme `()` avec l'option `-E`. E.g. `sed -E 's/([^ ]*)ation /\U\1ATION /g'` == `sed 's/\([^ ]*\)ation /\U\1ATION /g'`.
-
-- **Q1** : Rajouter un point final à chaque ligne de RADIOS.txt et mettre la première lettre en majuscule.
-- **Q2** : Remplacer toute occurrence de deux mots identiques consécutifs dans RADIOS.txt par une seule occurrence de ce mot, par exemple, "de de" devient "de". Pour tester votre commande, utilisez:
-
-  ```
-  echo "there there there are multiple multiple lexical errors in this line line . ." | votrecommande
-  ```
-  qui devrait donner la phrase suivante à la sortie:
-  ```
-  there are multiple lexical errors in this line .
-  ```
-
-### Exercice 7 [Optionnel]
-
-**--- Union de fichiers avec `join`.**
-
-Une [mesure d'association](http://collocations.de/AM/index.html) est une valeur numérique qui estime quel est le degré d'association entre deux mots. Cette mesure peut être utilisée pour [détecter automatiquement des "collocations"](https://en.wikipedia.org/wiki/Pointwise_mutual_information#Applications), c-à-d des séquences de mots qui apparaissent plus souvent qu'on ne pourrait s'y attendre par chance. Une mesure d'association souvent utilisée est la mesure $PMI$ (pointwise mutual information), qui est définie comme suit pour un bigramme formé par les mots $w_1$ et $w_2$ :
-
-![](assets/README-10ebb235.png)
-
-Où $c(w_1w_2)$ est le nombre d'occurrences du bigramme $w_1w_2$, comme calculé dans l'exercice 3, et $E(w_1w_2)$ est le nombre espéré d'occurrences de ce bigramme défini comme :
-
-![](assets/README-ea62ed9c.png)
+  - - Pour savoir plus de n-gram dans NLP: [Understanding Word N-grams in NLP](https://towardsdatascience.com/understanding-word-n-grams-and-n-gram-probability-in-natural-language-processing-9d9eef0fa058)
+  
+  - **Attention**: Par mot ici, nous entendons chaque ensemble de caractères séparés par un espace.
+  
+  - **Q0** : Enregistrez tous les mots uniques de 9 lettres, qui existent dans RADIOS.txt 
+  
+    - Enregistrez le stdout comme `[name]_TP1_E4_Q0.txt`
+  
+  - **Réponse**:
+  
+    ```bash
+    
+    ```
+    
+  - **Q1** : Enregistrez tous les mots uniques sans voyelle, qui existent dans RADIOS.txt 
+  
+    - Enregistrez le stdout comme `[name]_TP1_E4_Q1.txt`
+    - **Attention**: il faut oublier les voyelles avec accent!
+  
+  - **Réponse**:
+  
+    ```bash
+    
+    ```
 
 
-Où $c(w_1)$ est le nombre d'occurrences du premier mot, $c(w_2)$ est le nombre d'occurrences du deuxième mot et $N$ est le nombre total de mots dans ce texte.
+---------
 
-Pour chaque bigramme du texte, calculer sa valeur d'association *PMI* selon la formule donnée. Chaque ligne du fichier de sortie doit avoir la forme `w1 w2 c(w1w2) c(w1) c(w2) PMI`
+- **Exercice 5** : Remplacements de séquences avec `sed`
 
-- **Q1** : Quels sont les cinq bigrammes les plus fortement associés selon cette mesure ?
-- **Q2** : Quels sont les cinq bigrammes les plus fortement associés et qui apparaissent moins de 1000 fois dans le texte ?
+  - **Utilisation**: L'outil `sed` permet de remplacer du texte à l'aide d'expressions régulières. Par exemple, la commande `sed 's/exp1/exp2/[options]'` va remplacer (s) l'expression  `exp1` par l'expression `exp2` avec les `options` mentionnés. L'option est souvent la lettre `g` pour dire que toutes les occurrences sur une même ligne doivent être remplacées. Par exemple :
 
-**Aide** : Utilisez la commande join pour unir les informations des fichiers des exercices 2 et 3, mais faîtes attention à trier les fichiers par le(s) champ(s) de "jonction". Pour éviter les warnings, avant toute commande sort et join il faut modifier la variable `LC_ALL=C`, par exemple : `LC_ALL=C sort RADIOS.hist`.
+    - `sed 's/[éèêë]/e/g'` remplace toutes les lettres "e" accentuées par une lettre non-accentuée
+    - `sed 's/\([^ ]*\)ation /\U\1ATION /g'` transforme les mots qui finissent par le suffixe "ation" en majuscules, par exemple, "habitation" devient "HABITATION"
 
-### Exercice 8
-**--- Observation des encodages.**
+    **Suggestion**: On peut éviter d'échapper les caractères comme `()` avec l'option `-E`. E.g. `sed -E 's/([^ ]*)ation /\U\1ATION /g'` == `sed 's/\([^ ]*\)ation /\U\1ATION /g'`.
 
-Dans le répertoire [unicode_files](./unicode_files/), visualisez les fichiers _testFR.txt.utf8, testFR.txt.iso8859-1, testAR.txt, testAR.win_  (vous pouvez utiliser `cat` ou LibreOffice Writer ou d'autres éditeurs de texte).
+  - **Suggestion**: Pensez à regarder la page `man` de `sed` pour plus d'informations.
 
-Dans les préférences de votre terminal ou de votre éditeur de texte, vous devriez pouvoir changer l'encodage. Essayez de changer l'encodage et visualizer les fichiers à nouveau.
+  - `awk` est également un outil alternatif à `sed`, qui est souvent utilisé pour transformer du text.
 
-Questions :
+  - **Attention aux utilisateurs du Mac**: 
 
-- **Q1** : Pourquoi certains fichiers s'affichent comme des symboles étranges au lieu du texte ?
+    - `sed` native fonctionne un peu différemment entre `GNU` et `BSD` architectures, pour resoudre ce problème, les utilisateurs du Mac peut installer la version sed pour `GNU`:
 
-- **Q2** : Pourquoi certains charactères s'affichent correctement même quand on choisit un encodage de caractères différent de celui dans lequel le texte est enregistré (par exemple, essayez d'afficher testFR.txt.utf8 avec l'encodage "Turkish Windows-1254") ?
+      ```bash
+      brew install gnu-sed
+      alias sed=gsed
+      ```
 
+  - **Q0** : Rajouter un point final à chaque ligne de RADIOS.txt et mettre la première lettre de chaque ligne en majuscule.
 
-### Exercice 9
-**--- analyse des encodages**
+    - Enregistrez le stdout comme `[name]_TP1_E5_Q0.txt`
 
-Comparer les différentes couches d'Unicode pour le fichier _testFR.txt.utf8_, en particulier :
+  - **Réponse**:
 
-- Caractère ou glyphe affiché
-- Code point (vous pouvez consulter cette [table unicode](http://www.unicode.org/charts/))
-- Représentation sur le disque suivant le format d’encodage (`man UTF-8`, utiliser `xxd` pour voir la représentation en hexadécimal, puis vous pouvez consulter cette [table utf8](https://www.utf8-chartable.de))
+    ```bash
+    
+    ```
 
-Questions:
+  - **Q1** : Remplacer toute occurrence de deux mots identiques consécutifs dans RADIOS.txt par une seule occurrence de ce mot, par exemple, "de de" devient "de".
 
-- **Q1** : Que représente le code hexadécimal 0A ?
-- **Q2** : Combien d'octets sont nécessaires pour représenter le mot "déçà" en UTF-8 ? Quelle est la représentation de ce mot en hexadécimal ?
-- **Q3** : En UTF-8, quels sont les glyphes représentés par la séquence hexadécimale "47 72 C3 BC C3 9F 65" ? Combien d'octets sont requis pour représenter chaque glyphe ?
-- **Q4** : Quel est l'encodage utilisé pour le fichier testEN.txt ? Ouvrez le dans vi(m) en faisant en sorte qu'il soit lu comme un fichier UTF-8. Qu'en déduisez vous sur la compatibilité entre UTF-8 et l'encodage utilisé de base ? Pourquoi ?
+    - Enregistrez le stdout comme `[name]_TP1_E5_Q1.txt`
 
+  - **Réponse**:
 
-### Exercice 10
-**--- encodage et place occupée**
+    ```bash
+  
+    ```
+  
 
-Comparer les fichiers _testFR.txt.utf8_ et _testFR.txt.iso8859-1_
-
-- **Q1** : Quelle est la représentation la plus efficace en termes d'octets utilisés ?
-- **Q2** : Quelle est la séquence d'octets utilisée dans chaque encodage pour représenter le premier caractère ?
-
-### Exercice 11
-**--- conversion vers l’UTF-8**
-
-- **Q1** : Convertir le fichier _testAR.win_ en UTF-8 avec la commande Linux `iconv`. Que peut-on dire de l'affichage dans vim, une fois le fichier converti ?
-
-**Aide** : pour l'arabe, l'encodage de caractères du fichier est en format windows, appelé cp1256.
-
-### Exercice 12
-**--- conversion depuis l’UTF-8**
-
-Convertir le fichier _testFR.txt.utf8_ en UTF-16 avec `iconv`. Visualiser le changement avec `xxd`.
-
-- **Q1** : À quoi correspondent les deux premiers octets dans le fichier converti en UTF-16 ? (attention, ce n'est pas un charactère)
--  **Q2** : Quelle est la correspondance entre les codes point Unicode et leur représentation en UTF-16 ?
--  **Q3** : Essayez maintenant de réaliser la conversion vers UTF-16BE. Quelle est la différence entre cet encodage et UTF-16 ?
+---------
 
 ## 5- À rendre
 
-Here, the output of each excercise (the stdout) shoule be put on a text file named as follows:
+Ici, la sortie de chaque exercice (le stdout) doit être placée dans un fichier texte nommé comme suit :
 
--  `[name]_TP[TP_num]_[question_num].txt` -> Example: AlanLopez_TP1_2.txt refers to the output of TP1, excersie 2, done by Alan Lopez.
+-  `[name]_TP[TP number]_E[excercise number]_Q[question number].txt` -> Example: AlanLopez_TP1_E2_Q0.txt se réfère à la sortie de TP1, excersie 2, question 0, faite par Alan Lopez.
 
-Then compress all ur text files as zip and send the zip file on [Chamilo](https://chamilo.univ-grenoble-alpes.fr/). 
+Puis, veuillez écrire les lignes de commande utilisées dans les sections `Réponse:` de ce fichier.
 
-Please be careful with the naming of the files, as they will be processed automatically and any mistake in the name will result in your work not being credited.
+Compressez ensuite tous vos fichiers texte, ainsi que votre version modifiée de ce fichier avec les réponses, sous forme de zip et envoyez le fichier zip à [Chamilo](https://chamilo.univ-grenoble-alpes.fr/).
+
+Veuillez **faire très attention aux noms des fichiers**, car ils seront traités automatiquement et toute erreur dans le nom peut **faire en sorte** que votre **travail** ne soit **pas crédité**.
 
  
 

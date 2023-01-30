@@ -1,9 +1,11 @@
 # TP_NLP_2023
-Here practical work for the course "Communication Langagière" in 2023, at Université Grenoble Alpes
+Vous trouverez ici les travaux pratiques pour le cours "Communication Langagière" en 2023, à l'Université Grenoble Alpes. Veuillez consulter le dossier de chaque travail pratique pour plus de détails. Les travaux pratiques sont énumérés ci-dessous :
+
+1. [unix_intro](https://github.com/SinaAlisamir/TP_NLP_2023/tree/main/1-unix_intro)
 
 ## Installation
 
-Here, for all the practical works (excepted the first one related to Unix commands), we work with jupyter notebook. It goes without saying that the same objective can also be achieved through a multitude of ways, including using a text editor, or google colab. To Install the needed environment for the TPs, after installing the last version of [Miniconda3](https://docs.conda.io/en/latest/miniconda.html) (or Anaconda3, if you want a graphical interface), run the following commands:
+Ici, pour tous les travaux pratiques (à l'exception du premier qui concerne les commandes `unix`), nous travaillons avec `jupyter notebook`. Il va de soi que le même objectif peut aussi être atteint par une multitude de moyens, notamment en utilisant un éditeur de texte, ou google colab. Pour installer l'environnement nécessaire aux TPs, après avoir installé la dernière version de [Miniconda3](https://docs.conda.io/en/latest/miniconda.html) (ou Anaconda3, si vous souhaitez une interface graphique), exécutez les commandes suivantes :
 
 ````
 conda create -n "TP_NLP_2023" python=3.8 # creates the environment
