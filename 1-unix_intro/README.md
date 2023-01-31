@@ -328,7 +328,7 @@ Ici, la sortie de chaque exercice (le stdout) doit être placée dans un fichier
 
 Puis, veuillez écrire les lignes de commande utilisées dans les sections `Réponse:` de ce fichier.
 
-Compressez ensuite tous vos fichiers texte, ainsi que votre version modifiée de ce fichier avec les réponses, sous forme de zip et envoyez le fichier zip à [Chamilo](https://chamilo.univ-grenoble-alpes.fr/).
+Compressez ensuite tous vos fichiers texte, ainsi que votre version modifiée de ce fichier avec les réponses, sous forme de zip, en le nommant `[name]_TP[TP number]` (e.g. `AlanLopez_TP1.zip`) et envoyez le fichier zip à [Chamilo](https://chamilo.univ-grenoble-alpes.fr/).
 
 Veuillez **faire très attention aux noms des fichiers**, car ils seront traités automatiquement et toute erreur dans le nom peut **faire en sorte** que votre **travail** ne soit **pas crédité**.
 
