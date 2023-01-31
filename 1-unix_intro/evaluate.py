@@ -2,19 +2,13 @@ import os, sys, glob
 import pandas as pd
 
 def main(results_dir, target_folder):
-	print("results_dir", results_dir)
-	print("target_folder", target_folder)
 	target_path = os.path.join(results_dir, target_folder)
 	results_csv_path = os.path.join(results_dir, "marks.csv")
-	# json_files = glob.glob(jsons_dir, recursive=False)
 	students_folds = glob.glob(f"{results_dir}/*/", recursive=False)
 	students_folds.remove(target_path+"/")
-	# print(students_folds)
 	target_dict = get_excercises_dict(target_path)
 	for student_fold in students_folds:
 		student_dict = get_excercises_dict(student_fold)
-		print("student_fold", student_fold)
-		print("student_dict", student_dict)
 		evaluate_student(student_dict, target_dict)
 		save_results(student_dict, results_csv_path)
 
