@@ -86,7 +86,7 @@ wget https://raw.githubusercontent.com/lorelupo/tp_nlp/main/tp_intro/RADIOS.txt
 
   - **Q0**: Rendre tout le texte en lettres majuscules et enregistrez les 200 premiere lignes dans `[name]_TP1_E1_Q0.txt`
     - **Entrée** : Fichier texte RADIOS.txt
-    - **Aide**: Pensez à bien gérer les accents
+    - **Aide**: Pensez à bien gérer les accents (faites pas conversion et gardez les accents)
   - **Réponse**:
 
   ```bash
@@ -117,7 +117,7 @@ wget https://raw.githubusercontent.com/lorelupo/tp_nlp/main/tp_intro/RADIOS.txt
   
   ```bash
     
-    ```
+  ```
   
 - **Aide**: Pour les question suivants pensez bien à regarder la page man de `sort`
   
@@ -129,8 +129,8 @@ wget https://raw.githubusercontent.com/lorelupo/tp_nlp/main/tp_intro/RADIOS.txt
   
   ```bash
     
-    ```
-    
+  ```
+  
   - **Q3** : Trier les mots de RADIOS.hist par ordre alphabétique ? 
   
   - Enregistrez les chifres et les mots separer par espace, comme `[name]_TP1_E2_Q3.txt`
@@ -139,7 +139,7 @@ wget https://raw.githubusercontent.com/lorelupo/tp_nlp/main/tp_intro/RADIOS.txt
   
   ```bash
     
-    ```
+  ```
   
 - **Q4** : Trier les mots de RADIOS.hist par ordre des mots qui rime ensemble ?
   
@@ -151,7 +151,7 @@ wget https://raw.githubusercontent.com/lorelupo/tp_nlp/main/tp_intro/RADIOS.txt
   
   ```bash
     
-    ```
+  ```
 
 ---------
 
