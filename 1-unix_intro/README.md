@@ -264,7 +264,7 @@ wget https://raw.githubusercontent.com/lorelupo/tp_nlp/main/tp_intro/RADIOS.txt
   - **Q1** : Enregistrez tous les mots uniques sans voyelle, qui existent dans RADIOS.txt 
   
     - Enregistrez le stdout comme `[name]_TP1_E4_Q1.txt`
-    - **Attention**: il faut oublier les voyelles avec accent!
+    - **Attention**: il faut pas oublier les voyelles avec accent!
   
   - **Réponse**:
   
