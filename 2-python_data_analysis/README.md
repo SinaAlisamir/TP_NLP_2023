@@ -16,7 +16,7 @@ Ensuite, cliquez sur `TP.ipynb` pour lancer le TP.
 
 ## À rendre
 
-après avoir répondu aux questions dans ` TP.ipynb`, renommer le fichier comme `TP_1_[name].ipynb` avec votre nom au lieu de `[name]`, et envoyez le fichier à [Chamilo](https://chamilo.univ-grenoble-alpes.fr/).
+après avoir répondu aux questions dans ` TP.ipynb`, renommer le fichier comme `TP_2_[name].ipynb` avec votre nom au lieu de `[name]`, et envoyez le fichier à [Chamilo](https://chamilo.univ-grenoble-alpes.fr/).
 
  
 
