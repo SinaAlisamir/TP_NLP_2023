@@ -4,3 +4,4 @@ Vous trouverez ici les travaux pratiques pour le cours "Communication Langagièr
 1. [Introduction au traitement de texte par l'utilisation de commandes unix](https://github.com/SinaAlisamir/TP_NLP_2023/tree/main/1-unix_intro)
 2. [Analyse de données acoustiques et textuelles avec Python](https://github.com/SinaAlisamir/TP_NLP_2023/tree/main/2-python_data_analysis)
 3. [Apprentissage automatique pour les signaux acoustiques et les textes](https://github.com/SinaAlisamir/TP_NLP_2023/tree/main/3-python_machine_learning)
+4. [Apprentissage profond pour le traitement du langage naturel](https://github.com/SinaAlisamir/TP_NLP_2023/tree/main/4-python_deep)
